@@ -28,9 +28,11 @@ abstract class AbstractConfigureDesktopPreviewTask : AbstractComposeDesktopTask(
 
     @TaskAction
     fun run() {
-        val target = project.findProperty("compose.desktop.preview.target") as String
-        val port = project.findProperty("compose.desktop.preview.port") as String
-        val serverCP = project.configurations.detachedConfiguration(project.dependencies.create("org.jetbrains.compose:compose-desktop-preview-server:${ComposeBuildConfig.VERSION}")).files
+        val target = project.property("compose.desktop.preview.target") as String
+        val port = project.property("compose.desktop.preview.ide.port") as String
+        val serverCP = project.configurations.detachedConfiguration(
+            project.dependencies.create("org.jetbrains.compose:preview-rpc:${ComposeBuildConfig.VERSION}")
+        ).files
 
         val s = Socket(InetAddress.getByName("127.0.0.1"), port.toInt())
         s.getOutputStream().buffered().use {

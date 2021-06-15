@@ -24,7 +24,7 @@ class PreviewToolWindow : ToolWindowFactory, DumbAware {
             val canvas = Canvas()
             panel.add(canvas)
             content.addContent(content.factory.createContent(panel, null, false))
-            project.service<PreviewStateService>().registerPreviewPanel(panel)
+            project.service<PreviewStateService>().registerPreviewPanel(panel, canvas)
         }
     }
 }
